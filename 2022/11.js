@@ -1,0 +1,7 @@
+// https://adventofcode.com/2022/day/11/input
+
+// 1
+Object.values([...Array(20)].reduce((monkeys) => Object.values(monkeys).reduce((_,monkey) => [...monkey.items].reduce(_ => ((item) => monkeys[monkey.next(item)].items.push(item))(monkey.oper(monkey.items.shift())) && (++monkey.inspected) && monkeys, monkeys), monkeys), [...document.body.innerText.matchAll(/^Monkey (\d+):[^\d]*([\d, ]+)$[^=]*=([^\r\n]+)$[^\d]*(\d+)$[^\d]*(\d+)$[^\d]*(\d+)$/img)].reduce((a,[_,mk,its,fn,mod,mT,mF]) => (a[mk]={monkey: parseInt(mk), inspected:0, items:its.split(/\D+/g).map(n=>parseInt(n)), oper:eval(`(old)=>Math.floor((${fn})/3)`), next:eval(`(w)=>w%${mod}==0?${mT}:${mF}`)})&&a, {}))).map(({inspected})=>inspected).sort((a,b)=>b-a).slice(0,2).reduce((a,b)=>a*b) 
+
+// 2
+Object.values([...Array(10000)].reduce((monkeys) => Object.values(monkeys).reduce((_,monkey) => [...(monkey.items||[])].reduce(_ => ((item) => monkeys[monkey.next(item)].items.push(item))(Math.floor(monkey.oper(monkey.items.shift()) % monkeys.lcm)) && (++monkey.inspected) && monkeys, monkeys), monkeys), [...document.body.innerText.matchAll(/^Monkey (\d+):[^\d]*([\d, ]+)$[^=]*=([^\r\n]+)$[^\d]*(\d+)$[^\d]*(\d+)$[^\d]*(\d+)$/img)].reduce((a,[_,mk,its,fn,mod,mT,mF]) => (a[mk]={monkey: parseInt(mk), inspected:0, items:its.split(/\D+/g).map(n=>parseInt(n)), oper:eval(`(old)=>${fn}`), next:eval(`(w)=>w%${mod}==0?${mT}:${mF}`)}) && (a.lcm *= parseInt(mod)) && a, {lcm:1}))).map(({inspected})=>inspected).sort((a,b)=>b-a).slice(0,2).reduce((a,b)=>a*b)
