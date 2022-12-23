@@ -4,7 +4,6 @@
 ((tunnels)=>(y)=>[...Array(tunnels.bounds.right-tunnels.bounds.left+1).keys()].reduce((cover,x)=>cover+(tunnels.beacons.every(({x:bx,y:by})=>x+tunnels.bounds.left!=bx||y!=by) && tunnels.sensors.find(({x:sx,y:sy,r})=>r>=Math.abs(x+tunnels.bounds.left-sx)+Math.abs(y-sy))?1:0), 0))([...document.body.innerText.matchAll(/^.+?(-?\d+).+?(-?\d+).+?(-?\d+).+?(-?\d+)$/gm)].map(l=>[...l.map(c=>parseInt(c)),Math.abs(l[1]-l[3])+Math.abs(l[2]-l[4])]).reduce(({sensors,beacons,bounds},[_,sx,sy,bx,by,r])=> ({sensors:[...sensors,{x:sx,y:sy,r}], beacons:[...beacons,{x:bx,y:by}], bounds:{left:Math.min(bounds.left??sx,sx-r), right:Math.max(bounds.right??sx,sx+r), top:Math.min(bounds.top??sy,sy-r), bottom:Math.max(bounds.bottom??sy,sy+r)}}), {sensors:[],beacons:[],bounds:{}}))(2000000) 
 
 // 2
-// incomplete
 (
   ({ sensors, union }) =>
   (size) =>
